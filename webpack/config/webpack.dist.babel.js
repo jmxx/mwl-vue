@@ -1,28 +1,19 @@
-import paths   from './paths';
-import config  from './webpack.common';
-import webpack from 'webpack';
+import paths       from './paths';
+import baseConfig  from './webpack.common';
+import webpack     from 'webpack';
+import merge       from 'webpack-merge';
 
-config.entry.app = [
-  // this module is required to make HRM working, it's responsible for all this webpack magic:
-  'webpack-hot-middleware/client?reload=true',
-].concat(paths.entry.app);
+let config = merge(baseConfig, {
+  devtool: '#source-map',
 
-config.output = {
-  filename: 'app/[name].bundle.js',
-  publicPath: '/',
-  path: paths.destPath
-};
-
-// config.module.rules.push({
-//   test: /\.styl$/,
-//   use: [
-//     'css-loader',
-//     'stylus-loader'
-//   ]
-// });
-
-config.plugins.push(new webpack.HotModuleReplacementPlugin());
-
-config.plugins.push(new webpack.NoEmitOnErrorsPlugin());
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      sourceMap: true
+    }),
+  ]
+});
 
 export default config;

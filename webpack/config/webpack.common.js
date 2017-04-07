@@ -6,6 +6,12 @@ import paths from './paths';
 
 export default {
   entry: paths.entry,
+  resolve: {
+    alias: {
+      'vue$': path.resolve(paths.rootPath, 'node_modules/vue/dist/vue.esm.js'),
+      '@': path.resolve(paths.srcPath, 'app')
+    }
+  },
   module: {
     rules: [
       {
@@ -15,7 +21,7 @@ export default {
       {
         test: /\.js$/,
         use: 'babel-loader',
-        exclude: /node_modules/
+        include: [ path.resolve(paths.srcPath, 'app') ]
       },
       {
         test: /\.styl$/,
@@ -41,10 +47,5 @@ export default {
       hash: true,
       // chunks: ['vendors', 'app']
     }),
-  ],
-  resolve: {
-    alias: {
-      'vue$': path.resolve(paths.rootPath, 'node_modules/vue/dist/vue.esm.js') // 'vue/dist/vue.common.js' for webpack 1
-    }
-  }
+  ]
 };
