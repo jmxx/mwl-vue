@@ -6,7 +6,13 @@ import paths from './paths';
 
 export default {
   entry: paths.entry,
+  output: {
+    filename: 'app/[name].bundle.js',
+    publicPath: '/',
+    path: paths.destPath
+  },
   resolve: {
+    extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': path.resolve(paths.rootPath, 'node_modules/vue/dist/vue.esm.js'),
       '@': path.resolve(paths.srcPath, 'app')
@@ -43,7 +49,8 @@ export default {
 
     new HtmlWebpackPlugin({
       template: 'src/index.html',
-      inject: 'body',
+      inject: true,
+      // inject: 'body',
       hash: true,
       // chunks: ['vendors', 'app']
     }),

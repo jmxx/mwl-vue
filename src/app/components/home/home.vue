@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="flex">
-      <h1>Hi, from vue</h1>
+      <h1>Hi, from vue!!!!!</h1>
     </div>
 </template>
 
